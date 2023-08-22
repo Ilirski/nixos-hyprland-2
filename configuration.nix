@@ -2,13 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      #../overlays.nix
     ];
 
   # Bootloader.
@@ -17,6 +16,7 @@
 
   programs.hyprland = {
     enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     enableNvidiaPatches = true;
   };
 
@@ -32,7 +32,7 @@
     modesetting.enable = true;
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -44,6 +44,8 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Set your time zone.
   time.timeZone = "Asia/Kuala_Lumpur";
@@ -101,8 +103,10 @@
     wofi
     chromium
     discord
+    webcord
     swappy
     nvtop
+    htop
   ];
 
   # nixpkgs.overlays = [ ../overlays2.nix ];

@@ -22,8 +22,8 @@
         specialArgs = { inherit inputs; }; # Pass flake inputs to our config
         # > Our main nixos configuration file <
         modules = [ 
-	 ./nixos/configuration.nix 
-	 hyprland.nixosModules.default
+	 ./configuration.nix 
+	 # hyprland.nixosModules.default
 	];
       };
     };
